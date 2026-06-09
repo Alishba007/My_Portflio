@@ -337,6 +337,56 @@
     .fg input:focus, .fg textarea:focus { border-color: var(--gold); }
     .fg textarea { resize: vertical; min-height: 120px; }
 
+    /* ─── EXTRACURRICULAR ─── */
+    #extracurricular { background: var(--navy); }
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+    .extra-card {
+      background: var(--navy-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      transition: border-color 0.3s, transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .extra-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .extra-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+    .extra-card:hover::after { opacity: 1; }
+    .extra-icon-wrap {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .extra-title { font-size: 1rem; font-weight: 600; color: var(--white); line-height: 1.4; }
+    .extra-org { font-size: 0.8rem; color: var(--gold-light); font-weight: 500; }
+    .extra-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    .extra-badge {
+      display: inline-block; padding: 0.22rem 0.65rem;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      border-radius: 2rem; font-size: 0.72rem;
+      color: var(--gold-light); font-weight: 600;
+      align-self: flex-start;
+    }
+
+    /* ─── WEB3FORMS STATUS ─── */
+    .form-status {
+      padding: 0.75rem 1rem; border-radius: 5px;
+      font-size: 0.85rem; font-weight: 500; display: none;
+    }
+    .form-status.success { background: rgba(52,199,89,0.12); border: 1px solid rgba(52,199,89,0.3); color: #5dde8a; display: block; }
+    .form-status.error   { background: rgba(255,69,58,0.12);  border: 1px solid rgba(255,69,58,0.3);  color: #ff6b6b; display: block; }
+    .btn-gold:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
     /* ─── FOOTER ─── */
     footer {
       background: var(--navy);
@@ -353,13 +403,95 @@
     .reveal { opacity:0; transform:translateY(26px); transition:opacity .65s ease,transform .65s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
-    /* ─── RESPONSIVE ─── */
+    /* ─── HAMBURGER ─── */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--gold); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── RESPONSIVE 768px ─── */
     @media(max-width:768px){
-      .hero-inner { flex-direction: column; gap: 2.5rem; text-align: center; }
+      nav { padding: 1rem 5%; }
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(10,22,40,0.98);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--gold-border);
+        padding: 1.5rem 5%; gap: 1.2rem;
+      }
+      .nav-links.open { display: flex; }
+
+      #hero { padding: 6rem 5% 3rem; }
+      .hero-inner { flex-direction: column; gap: 2rem; text-align: center; }
       .hero-btns, .hero-links { justify-content: center; }
-      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      nav { padding: 1rem 4%; }
-      .nav-links { gap: 1.2rem; }
+      .hero-desc { margin: 0 auto 1.8rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      section { padding: 4rem 5%; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .extra-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── RESPONSIVE 500px ─── */
+    @media(max-width:500px){
+      nav { padding: 0.9rem 4%; }
+      .nav-logo { font-size: 1.1rem; }
+
+      #hero { padding: 5.5rem 4% 2.5rem; }
+      .photo-ring { width: 170px; height: 170px; }
+      .hero-name { font-size: 2.1rem; }
+      .hero-role { font-size: 0.88rem; }
+      .hero-desc { font-size: 0.88rem; }
+      .hero-btns { flex-direction: column; align-items: center; gap: 0.7rem; }
+      .btn-gold, .btn-ghost { width: 100%; max-width: 260px; text-align: center; padding: 0.9rem 1rem; }
+      .hero-links { flex-direction: column; align-items: center; gap: 0.6rem; }
+
+      section { padding: 3.5rem 4%; }
+      .sec-title { font-size: 1.6rem; }
+
+      .edu-card { flex-direction: column; gap: 0.8rem; padding: 1.3rem; }
+      .edu-icon { width: 38px; height: 38px; font-size: 1rem; }
+
+      .exp-header { flex-direction: column; gap: 0.5rem; }
+      .exp-card { padding: 1.3rem; }
+
+      .proj-card { padding: 1.4rem; }
+      .proj-title { font-size: 1rem; }
+
+      .extra-card { padding: 1.4rem; }
+
+      .cert-card { padding: 1rem 1.2rem; }
+
+      .contact-grid { gap: 2rem; }
+      .c-link { padding: 0.8rem 1rem; }
+      .contact-form .fg input,
+      .contact-form .fg textarea { font-size: 0.88rem; padding: 0.7rem 0.85rem; }
+
+      footer { flex-direction: column; align-items: center; text-align: center; padding: 1.5rem 4%; }
+      .footer-left { font-size: 0.95rem; }
+    }
+
+    /* ─── RESPONSIVE 380px ─── */
+    @media(max-width:380px){
+      .photo-ring { width: 140px; height: 140px; }
+      .hero-name { font-size: 1.85rem; }
+      .hero-tag { font-size: 0.68rem; padding: 0.3rem 0.75rem; }
+      .about-grid .fact { padding: 0.8rem 1rem; }
+      .proj-tech { gap: 0.3rem; }
+      .tech-chip { font-size: 0.68rem; }
     }
   </style>
 </head>
@@ -368,13 +500,17 @@
 <!-- ═══ NAV ═══ -->
 <nav>
   <div class="nav-logo">AR</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" class="nav-close">About</a></li>
+    <li><a href="#education" class="nav-close">Education</a></li>
+    <li><a href="#experience" class="nav-close">Experience</a></li>
+    <li><a href="#skills" class="nav-close">Skills</a></li>
+    <li><a href="#projects" class="nav-close">Projects</a></li>
+    <li><a href="#extracurricular" class="nav-close">Activities</a></li>
+    <li><a href="#contact" class="nav-close">Contact</a></li>
   </ul>
 </nav>
 
@@ -385,21 +521,19 @@
   <div class="hero-inner">
 
     <div class="hero-photo-wrap">
-      <!-- REPLACE THIS DIV WITH YOUR PHOTO:
-           <img src="photo.jpg" style="width:230px;height:230px;border-radius:50%;border:2.5px solid #c9a84c;object-fit:cover;box-shadow:0 0 0 10px rgba(201,168,76,0.08),0 28px 70px rgba(0,0,0,0.55)"> -->
+           <!-- /*<img src="photo style" style="width:230px;height:230px;border-radius:50%;border:2.5px solid #c9a84c;object-fit:cover;box-shadow:0 0 0 10px rgba(201,168,76,0.08),0 28px 70px rgba(0,0,0,0.55)"> */ -->
       <div class="photo-ring">
-        <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+        <!-- <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
           <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-        </svg>
-        <span style="font-size:0.72rem;padding:0 1rem">Replace with<br>your photo</span>
+        </svg> -->
+        <img src="C:\Users\hp\Desktop\Development\Career\Portflio\WhatsApp Image 2026-06-08 at 11.49.05 PM.jpeg" style="width:230px;height:230px;border-radius:50%;border:2.5px solid #c9a84c;object-fit:cover;box-shadow:0 0 0 10px rgba(201,168,76,0.08),0 28px 70px rgba(0,0,0,0.55)"> 
       </div>
     </div>
 
     <div class="hero-text">
-      <div class="hero-tag"><span class="tag-dot"></span>Final-Year Software Engineering Student</div>
-      <h1 class="hero-name">Syeda Alishba<br><span>Raza</span></h1>
+      <h1 class="hero-name">Syeda Alishba Raza </h1>
       <div class="hero-role">Backend &amp; AI Developer · Karachi, Pakistan</div>
-      <p class="hero-desc">Building scalable backend systems and AI-powered applications. Specialising in Python, MERN, Django, FastAPI, LLM integrations, RAG systems and data science.</p>
+      <p class="hero-desc">Building scalable backend systems and AI-powered applications. Building expertise in Python, MERN, Django, FastAPI, LLM integrations, RAG systems and data science.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-gold">View Projects</a>
         <a href="#contact" class="btn-ghost">Get In Touch</a>
@@ -430,25 +564,25 @@
     <div class="divider"></div>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>Hi, I'm Syeda Alishba — a final-year Software Engineering student at the University of Karachi (UBIT), with a strong focus on Data Science, AI, and backend development. I'm passionate about building systems that are both intelligent and production-ready.</p>
-        <p>I've built a Multi-User RAG AI Assistant using locally hosted LLMs with Ollama and LangChain, covering document chunking, vector retrieval, and context injection. On the web side, I've worked with full-stack platforms using Django REST Framework, FastAPI, and the MERN stack.</p>
-        <p>Beyond backend work, I've explored Exploratory Data Analysis and trained Convolutional Neural Networks for real-world classification tasks. I enjoy working across the full spectrum — from clean API architecture to responsive frontends.</p>
+        <p>Hi, I'm Syeda Alishba — a final-year Software Engineering student at the University of Karachi (UBIT), focused on Data Science, AI, and backend development. I'm passionate about building systems that are both intelligent and production-ready.</p>
+        <p>I've built a Multi-User RAG AI Assistant using locally hosted LLMs with Ollama and LangChain, featuring document chunking, vector retrieval, context injection, and conversational memory. On the web side, I've developed full-stack platforms using Django REST Framework, FastAPI, and the MERN stack.</p>
+        <p>Beyond backend work, I've explored Exploratory Data Analysis and trained Convolutional Neural Networks for real-world classification tasks. I enjoy working across the full spectrum from clean API architecture to responsive frontends.</p>
       </div>
       <div class="about-facts">
         <div class="fact">
-          <span class="fact-icon">🎓</span>
-          <div class="fact-text"><strong>Final-Year BSSE Student</strong>University of Karachi (UBIT) · 2023–Present</div>
+          
+          <div class="fact-text"><strong>Final Year BSSE Student</strong> University of Karachi (UBIT) · 2023–Present</div>
         </div>
         <div class="fact">
-          <span class="fact-icon">🤖</span>
+         
           <div class="fact-text"><strong>AI & LLM </strong>RAG systems, LangChain, Ollama, ChromaDB/FAISS, CNNs</div>
         </div>
         <div class="fact">
-          <span class="fact-icon">🌐</span>
+          
           <div class="fact-text"><strong>Full-Stack Developer</strong>Django · FastAPI · React · MERN </div>
         </div>
         <div class="fact">
-          <span class="fact-icon">💼</span>
+          
           <div class="fact-text"><strong>Guru Group Intern</strong>Onsite · Innovations Department · Oct–Dec 2024</div>
         </div>
       </div>
@@ -471,7 +605,6 @@
           <div class="edu-meta">
             <span>2023 – Present</span>
             <!-- <span class="edu-badge">CGPA: 3.2 / 4.0</span> -->
-            <!-- <span>Specialisation: Data Science &amp; AI</span> -->
           </div>
         </div>
       </div>
@@ -479,14 +612,14 @@
         <div class="edu-icon">🏫</div>
         <div>
           <div class="edu-degree">Intermediate (Pre-Engineering / FSc)</div>
-          <div class="edu-school">Khatoon-e-Pakistan College — Karachi, Pakistan</div>
+          <div class="edu-school">Khatoon-e-Pakistan Govt. Degree College — Karachi, Pakistan</div>
         </div>
       </div>
       <div class="edu-card reveal">
         <div class="edu-icon">🏫</div>
         <div>
-          <div class="edu-degree">School</div>
-          <div class="edu-school">St. Joseph Convent High School</div>
+          <div class="edu-degree">School </div>
+          <div class="edu-school">St.Joseph Convent High School</div>
         </div>
       </div>
     </div>
@@ -695,23 +828,47 @@
         </div>
       </div>
 
-      <!-- Predictive Simulation -->
-      <div class="proj-card reveal">
-        <div class="proj-header">
-          <span class="proj-icon">📈</span>
-          <div class="proj-badges"><span class="proj-badge gh-badge">C# / Simulation</span></div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXTRACURRICULAR ═══ -->
+<section id="extracurricular">
+  <div class="inner">
+    <div class="sec-eyebrow">Beyond the Code</div>
+    <h2 class="sec-title">Extracurricular Activities</h2>
+    <div class="divider"></div>
+    <div class="extra-grid">
+
+      <div class="extra-card reveal">
+        <div class="extra-icon-wrap"><img src="https://img.icons8.com/color/1200/united-nations.jpg" style="width:42px;height:42px;object-fit:contain;"/></div>
+        <div>
+          <div class="extra-title">UN & NACTA — Two-Day Training Workshop</div>
+          <div class="extra-org">UN · NACTA · Lahore, Pakistan</div>
         </div>
-        <div class="proj-title">Predictive Simulation Engine</div>
-        <p class="proj-desc">A simulation engine built in C# that models and forecasts real-world scenarios by processing complex data patterns to generate accurate, data-driven predictions and trend analysis.</p>
-        <div class="proj-tech">
-          <span class="tech-chip">C#</span><span class="tech-chip">Predictive Modelling</span>
+        <p class="extra-desc">Attended a two-day training workshop co-organised by the United Nations and NACTA (National Counter Terrorism Authority) in Lahore, under the project "Advancing Inclusive and Resilient Youth Communities Through Preventing Violent Extremism" — focusing on youth-led approaches to countering extremism, building community resilience, and promoting inclusive societies.</p>
+        <span class="extra-badge">Global Affairs</span>
+      </div>
+
+      <div class="extra-card reveal">
+        <div class="extra-icon-wrap"><img src="https://cihcdn.blob.core.windows.net/wordpress/2024/07/Logo-EN-Black.png" style="width:32px;height:32px;object-fit:contain;"/></div>
+        <div>
+          <div class="extra-title">Education Donation Drive for Orphan Children</div>
+          <div class="extra-org">Akhuwat Foundation · Volunteer</div>
         </div>
-        <div class="proj-links">
-          <a href="https://github.com/Alishba007/Simulation" target="_blank" class="proj-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            GitHub
-          </a>
+        <p class="extra-desc">Volunteered with Akhuwat Foundation to collect donations for the education of orphan children — contributing to grassroots efforts that provide underprivileged youth access to quality learning.</p>
+        <span class="extra-badge">Community Service</span>
+      </div>
+
+      <div class="extra-card reveal">
+        <div class="extra-icon-wrap">🎙️</div>
+        <div>
+          <div class="extra-title">Vice President — Media Society</div>
+          <div class="extra-org">Dept. of Computer Science · University of Karachi</div>
         </div>
+        <p class="extra-desc">Served as Ex Vice President of the Media Society at the Department of Computer Science, University of Karachi — leading media campaigns, managing events, and representing the student body in departmental activities.</p>
+        <span class="extra-badge">Leadership</span>
       </div>
 
     </div>
@@ -791,23 +948,28 @@
         </div>
       </div>
       <div class="contact-form reveal">
+        <div id="formStatus" class="form-status"></div>
+        <!-- Web3Forms — replace YOUR_ACCESS_KEY_HERE with your actual key from web3forms.com -->
+        <input type="hidden" name="access_key" id="w3fKey" value="58b92cba-8c87-49d0-9a0c-8e5ed3568cd6"/>
+        <input type="hidden" name="subject" value="New message from Portfolio — Alishba Raza"/>
+        <input type="hidden" name="from_name" value="Portfolio Contact Form"/>
         <div class="fg">
           <label>Your Name</label>
-          <input type="text" placeholder="Jane Smith"/>
+          <input type="text" id="fname" name="name" placeholder="Jane Smith" required/>
         </div>
         <div class="fg">
           <label>Email</label>
-          <input type="email" placeholder="jane@example.com"/>
+          <input type="email" id="femail" name="email" placeholder="jane@example.com" required/>
         </div>
         <div class="fg">
           <label>Subject</label>
-          <input type="text" placeholder="Collaboration / Opportunity / Other"/>
+          <input type="text" id="fsubject" name="subject_detail" placeholder="Collaboration / Opportunity / Other"/>
         </div>
         <div class="fg">
           <label>Message</label>
-          <textarea placeholder="Hi Alishba, I'd like to..."></textarea>
+          <textarea id="fmessage" name="message" placeholder="Hi Alishba, I'd like to..." required></textarea>
         </div>
-        <button class="btn-gold" style="align-self:flex-start" onclick="window.location.href='mailto:razaaaguru4@gmail.com'">Send Message</button>
+        <button class="btn-gold" id="sendBtn" style="align-self:flex-start" type="button" onclick="sendMessage()">Send Message</button>
       </div>
     </div>
   </div>
@@ -820,11 +982,79 @@
 </footer>
 
 <script>
+  /* ── Scroll reveal ── */
   const obs = new IntersectionObserver(
     entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.1 }
+    { threshold: 0.08 }
   );
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-close').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  /* ── Web3Forms contact ── */
+  async function sendMessage() {
+    const btn    = document.getElementById('sendBtn');
+    const status = document.getElementById('formStatus');
+    const name    = document.getElementById('fname').value.trim();
+    const email   = document.getElementById('femail').value.trim();
+    const subject = document.getElementById('fsubject').value.trim();
+    const message = document.getElementById('fmessage').value.trim();
+    const key     = document.getElementById('w3fKey').value;
+
+    status.className = 'form-status';
+    status.textContent = '';
+
+    if (!name || !email || !message) {
+      status.textContent = '⚠ Please fill in your name, email and message.';
+      status.className = 'form-status error';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: key,
+          name, email,
+          subject: subject || 'New Portfolio Message',
+          message
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        status.textContent = '✅ Message sent! I\'ll get back to you soon.';
+        status.className = 'form-status success';
+        document.getElementById('fname').value = '';
+        document.getElementById('femail').value = '';
+        document.getElementById('fsubject').value = '';
+        document.getElementById('fmessage').value = '';
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch (err) {
+      status.textContent = '❌ Something went wrong. Please email me directly at razaaaguru4@gmail.com';
+      status.className = 'form-status error';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Send Message';
+  }
 </script>
 </body>
 </html>
